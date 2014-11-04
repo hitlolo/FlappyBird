@@ -10,32 +10,85 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes">
+      <UniqueIdentifier>{a178d550-0af2-4f04-a77f-08fc89e1c22f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\GameLoad">
+      <UniqueIdentifier>{2e7ba0c9-21a0-4a93-99e8-c1e5b3d19181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\GameReady">
+      <UniqueIdentifier>{eeb83a4f-767d-4fe0-a677-dcd0ca1fcad7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\Gaming">
+      <UniqueIdentifier>{fcfa53e4-0e25-47ce-93f1-8df671ab45fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\GameEnd">
+      <UniqueIdentifier>{b2cf75c1-81b6-424e-ad24-b5a13436c056}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AppDelegate.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+      <Filter>classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\HelloWorldScene.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AtlasLoader.cpp">
+      <Filter>classes\GameLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LoadingScene.cpp">
+      <Filter>classes\GameLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BackGroundLayer.cpp">
+      <Filter>classes\GameReady</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\InfoScene.cpp">
+      <Filter>classes\GameReady</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\InfoLayer.cpp">
+      <Filter>classes\GameReady</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AppDelegate.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\HelloWorldScene.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\Classes\HelloWorldScene.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AtlasLoader.h">
+      <Filter>classes\GameLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LoadingScene.h">
+      <Filter>classes\GameLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BackGroundLayer.h">
+      <Filter>classes\GameReady</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\InfoScene.h">
+      <Filter>classes\GameReady</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\InfoLayer.h">
+      <Filter>classes\GameReady</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Resources\image\atlas.txt">
+      <Filter>resource</Filter>
+    </Text>
   </ItemGroup>
 </Project>

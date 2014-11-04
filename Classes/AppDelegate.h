@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 
+
 /**
 @brief    The cocos2d Application.
 
@@ -34,6 +35,12 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
+
+
+	/**
+	@brief The function is used to set the resource read directory
+	*/
+	
 };
 
 #endif // _APP_DELEGATE_H_
