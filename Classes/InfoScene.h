@@ -3,7 +3,7 @@
 
 /***********************************************************************************************
 
-@ Project: flappy brid
+@ Project: Flappy Brid
 @ Author:  Lolo
 @ Date:    2014-11-3 19:02:33
 @ File:    infoScene.h
@@ -18,6 +18,7 @@ ________________________________________________________________________________
 #include "InfoLayer.h"
 #include "BackGroundLayer.h"
 
+
 USING_NS_CC;
 
 class InfoScene :public Scene{
@@ -27,7 +28,7 @@ private:
 public:
 
 	// Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
-	virtual bool init();
+	virtual bool init() override;
 
 
 	// implement the "static create()" method manually

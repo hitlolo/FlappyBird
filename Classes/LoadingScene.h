@@ -3,7 +3,7 @@
 
 /***********************************************************************************************
 
-@ Project: flappy brid
+@ Project: Flappy Brid
 @ Author:  Lolo
 @ Date:    2014-11-3 17:02:33
 @ File:    LoadingScene.h
@@ -15,9 +15,8 @@ ________________________________________________________________________________
 ************************************************************************************************/
 
 #include "cocos2d.h"
-#include "AtlasLoader.h"
-#include "SimpleAudioEngine.h"
-#include "Data.h"
+#include "InfoScene.h"
+#include "GameData.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -35,13 +34,6 @@ class LoadingScene :public Layer{
 		CREATE_FUNC(LoadingScene);
 		// Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 		virtual bool init();
-		
-		/**@brif
-		* When this scene appear ,will call this method,
-		* not this scene is create, so if you have some thing
-		* want do when scen appear not init, please add to here
-		*/
-		void onEnter() override;
 
 		
 	private:

@@ -2,13 +2,16 @@
 #ifndef __FB_ATLAS_H__
 #define __FB_ATLAS_H__
 
-
+/*@@@@@  WARNING @@@@@@@
+this class deprecated!
+@@@@@  WARNING @@@@@@@
+*/
 
 
 
 /***********************************************************************************************
 
-@ Project: flappy brid
+@ Project: Flappy Brid
 @ Author:  Lolo
 @ Date:    2014-11-2 16:19:43
 @ File:    AtlasLoader.h
@@ -21,7 +24,9 @@ ________________________________________________________________________________
 
 
 
-#include"cocos2d.h"
+#include "cocos2d.h"
+
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -48,7 +53,6 @@ typedef struct{
 class AtlasLoader{
 
 	private:
-		
 		/**
 		*  A singleton AtalsLoader instance;
 		**/
@@ -57,6 +61,7 @@ class AtlasLoader{
 		/**
 		*  A map container to contain sprite frame by name.
 		**/
+//		std::map<std::string, SpriteFrame*> spriteFrames;
 		Map<std::string, SpriteFrame*> spriteFrames;
 
 	public:

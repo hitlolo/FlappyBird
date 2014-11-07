@@ -25,6 +25,9 @@
     <Filter Include="classes\GameEnd">
       <UniqueIdentifier>{b2cf75c1-81b6-424e-ad24-b5a13436c056}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\deprecated">
+      <UniqueIdentifier>{1f38a3da-5bf7-495e-bd57-1a9f9580ca17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -35,9 +38,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\AtlasLoader.cpp">
-      <Filter>classes\GameLoad</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\LoadingScene.cpp">
       <Filter>classes\GameLoad</Filter>
@@ -51,6 +51,12 @@
     <ClCompile Include="..\Classes\InfoLayer.cpp">
       <Filter>classes\GameReady</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\BirdSprite.cpp">
+      <Filter>classes\Gaming</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AtlasLoader.cpp">
+      <Filter>classes\deprecated</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -62,14 +68,8 @@
     <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\AtlasLoader.h">
-      <Filter>classes\GameLoad</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\LoadingScene.h">
       <Filter>classes\GameLoad</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Data.h">
-      <Filter>classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\BackGroundLayer.h">
       <Filter>classes\GameReady</Filter>
@@ -80,15 +80,19 @@
     <ClInclude Include="..\Classes\InfoLayer.h">
       <Filter>classes\GameReady</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\GameData.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BirdSprite.h">
+      <Filter>classes\Gaming</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AtlasLoader.h">
+      <Filter>classes\deprecated</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\Resources\image\atlas.txt">
-      <Filter>resource</Filter>
-    </Text>
   </ItemGroup>
 </Project>

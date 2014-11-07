@@ -1,6 +1,13 @@
+
+
+/*@@@@@  WARNING @@@@@@@
+	this class deprecated!
+  @@@@@  WARNING @@@@@@@
+*/
+
 /***********************************************************************************************
 
-@ Project: flappy brid
+@ Project: Flappy Brid
 @ Author:  Lolo
 @ Date:    2014-11-2 17:01:33
 @ File:    AtlasLoader.cpp
@@ -86,7 +93,7 @@ bool AtlasLoader::loadAtlas(std::string filename, Texture2D* texture)
 	
 	if (!data.empty())
 	{
-		std::string::size_type located = 0; 
+		std::string::size_type located = 0;
 		std::string line;
 
 		located = data.find_first_of('\n');
@@ -97,9 +104,9 @@ bool AtlasLoader::loadAtlas(std::string filename, Texture2D* texture)
 		{
 			sscanf(line.c_str(), format.c_str(), bufName, &s_atlas.width, &s_atlas.height, &s_atlas.start.x, &s_atlas.start.y, &s_atlas.end.x, &s_atlas.end.y);
 			s_atlas.name = bufName;
-			
+
 			if (!s_atlas.name.empty())
-			{		
+			{
 				s_atlas.start.x *= 1024;
 				s_atlas.start.y *= 1024;
 				s_atlas.end.x *= 1024;
@@ -109,14 +116,19 @@ bool AtlasLoader::loadAtlas(std::string filename, Texture2D* texture)
 			located = data.find_first_of("\n");
 			line = data.substr(0, located);
 			data = data.substr(located + 1);
-			
+
+		    if(s_atlas.name == std::string("land")) {
+				CCLOG("i am coming");
+		    	s_atlas.start.x += 1;
+		    }
+
 			Rect rect  = Rect(s_atlas.start.x,s_atlas.start.y,s_atlas.width,s_atlas.height);
 			auto frame = SpriteFrame::createWithTexture(texture,rect);
-			this->spriteFrames.insert(s_atlas.name,frame);
+			this->spriteFrames.insert(s_atlas.name, frame);
 
-		}		
+
+		}
 	}
-	CCLOG("DATA EMPTY");
 	
 	return false;
 }

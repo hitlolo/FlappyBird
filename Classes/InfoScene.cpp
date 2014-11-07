@@ -1,6 +1,6 @@
 /***********************************************************************************************
 
-@ Project: flappy brid
+@ Project: Flappy Brid
 @ Author:  Lolo
 @ Date:    2014-11-3 19:02:33
 @ File:    infoScene.cpp
@@ -20,8 +20,11 @@ bool InfoScene::init()
 	}
 
 	//do initialization;
-	auto infoLayer = InfoLayer::create();
 	auto backLayer = BackGroundLayer::create(); 
+	auto infoLayer = InfoLayer::create();
+
 	this->addChild(backLayer);
 	this->addChild(infoLayer);
+
+	return true;
 }
