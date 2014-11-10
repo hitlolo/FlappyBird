@@ -1,41 +1,45 @@
-#ifndef __FB_INFO_LAYER_H__
-#define __FB_INFO_LAYER_H__
-
 /***********************************************************************************************
 
 @ Project: Flappy Brid
 @ Author:  Lolo
-@ Date:    2014-11-3 19:02:33
-@ File:    infoLayer.h
+@ Date:    2014-11-4 23:42:32
+@ File:    GameScene.h
 ________________________________________________________________________________________________
 @ Description:
-Game Infomation Show
+ Main Game Scene
 ________________________________________________________________________________________________
 
 ************************************************************************************************/
+
+#ifndef __FB_GAME_SCENE_H__
+#define __FB_GAME_SCENE_H__
+
+
 #include "cocos2d.h"
 #include "GameData.h"
-#include "BirdSprite.h"
-#include "GameScene.h"
-#include "SimpleAudioEngine.h"
+#include "BackGroundLayer.h"
+#include "BulletinBoard.h"
+#include "GameLayer.h"
+#include "TouchLayer.h" 
 
 USING_NS_CC;
 
-class InfoLayer :public Layer{
+class GameScene :public Scene{
+
+private:
+
+
 
 public:
 
-	virtual bool init() override;
+	virtual bool init(); 
 
-	CREATE_FUNC(InfoLayer);
+	CREATE_FUNC(GameScene);
 
-private:
-	
-	void loadInfo();
-
-	void gameStartCallback(Ref* sender);
-
-	void playGame();
+	void initPhysicsAttributes();
 };
+
+
+
 
 #endif

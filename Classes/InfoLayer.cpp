@@ -68,6 +68,15 @@ void InfoLayer::loadInfo()
 
 void InfoLayer::gameStartCallback(Ref* sender)
 {
-	CCLOG("READY STEADDY GO!");
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(M_GETPOINT);
+
+	this->playGame();
+}
+
+void InfoLayer::playGame()
+{
+	
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(M_SWOOSH);
+	auto nextScene = GameScene::create();
+	TransitionScene *transition = TransitionFade::create(0.2f, nextScene);
+	Director::getInstance()->replaceScene(transition);
 }

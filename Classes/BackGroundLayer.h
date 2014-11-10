@@ -18,6 +18,7 @@ ________________________________________________________________________________
 #include "cocos2d.h"
 #include "GameData.h"
 #include "time.h"
+#include "PipeLayer.h"
 
 
 USING_NS_CC;
@@ -28,11 +29,16 @@ public:
 
 	virtual bool init() override;
 
-	void onExit() override;
+	//void onExit() override;
 
 	CREATE_FUNC(BackGroundLayer);
 
+
+
+
 private:
+
+	void onExit() override;
 
 	int getLocalTime();
 
@@ -42,7 +48,13 @@ private:
 
 	void scrollingStart();
 	
-	void scrollingEnd();
+	void scrollingEnd(Ref* sender);
+
+	void initPhysicsAttributes();
+
+	PipeLayer* pipeLayer;
+
+	void pipeScrollStart(Ref* sender);
 };
 
 

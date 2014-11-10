@@ -36,7 +36,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     if(!glview) {
         glview = GLViewImpl::create("Flappy Bird");
         director->setOpenGLView(glview);
+		glview->setFrameSize(288,512);
     }
+
 	glview->setDesignResolutionSize(288, 512, ResolutionPolicy::SHOW_ALL);
     // turn on display FPS
     director->setDisplayStats(true);

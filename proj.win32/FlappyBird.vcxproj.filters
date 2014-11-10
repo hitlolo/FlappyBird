@@ -57,6 +57,21 @@
     <ClCompile Include="..\Classes\AtlasLoader.cpp">
       <Filter>classes\deprecated</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\GameScene.cpp">
+      <Filter>classes\Gaming</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BulletinBoard.cpp">
+      <Filter>classes\Gaming</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameLayer.cpp">
+      <Filter>classes\Gaming</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Touchlayer.cpp">
+      <Filter>classes\Gaming</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PipeLayer.cpp">
+      <Filter>classes\Gaming</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -88,6 +103,27 @@
     </ClInclude>
     <ClInclude Include="..\Classes\AtlasLoader.h">
       <Filter>classes\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameScene.h">
+      <Filter>classes\Gaming</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BulletinDelegate.h">
+      <Filter>classes\Gaming</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BulletinBoard.h">
+      <Filter>classes\Gaming</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameLayer.h">
+      <Filter>classes\Gaming</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TouchDelegate.h">
+      <Filter>classes\Gaming</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TouchLayer.h">
+      <Filter>classes\Gaming</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PipeLayer.h">
+      <Filter>classes\Gaming</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

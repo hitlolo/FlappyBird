@@ -21,12 +21,18 @@ bool BackGroundLayer::init()
 	}
 
 	this->initBackGround();
+	this->initPhysicsAttributes();
 	this->scrollingStart();
-
+	__NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(BackGroundLayer::scrollingEnd), MSG_GAME_STOP, nullptr);
+	__NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(BackGroundLayer::pipeScrollStart), MSG_PIPE_START, nullptr);
 	return true;
 }
 
-
+void BackGroundLayer::onExit(){
+	Layer::onExit();
+	__NotificationCenter::getInstance()->removeObserver(this, MSG_GAME_STOP);
+	__NotificationCenter::getInstance()->removeObserver(this, MSG_PIPE_START);
+}
 
 int BackGroundLayer::getLocalTime()
 {
@@ -59,8 +65,8 @@ void BackGroundLayer::initBackGround()
 	this->addChild(background);
 
 	//------------------------------------------
-	Size  visibleSize = Director::sharedDirector()->getVisibleSize();
-	Point originPoint = Director::sharedDirector()->getVisibleOrigin();
+	Size  visibleSize = Director::getInstance()->getVisibleSize();
+	Point originPoint = Director::getInstance()->getVisibleOrigin();
 
 	auto scrollLand_f = Sprite::createWithSpriteFrameName(PIC_BG_LAND);
 	auto scrollLand_s = Sprite::createWithSpriteFrameName(PIC_BG_LAND);
@@ -73,6 +79,9 @@ void BackGroundLayer::initBackGround()
 
 	scrollLand_f->setName("land_f");
 	scrollLand_s->setName("land_s");
+
+	pipeLayer = PipeLayer::create();
+	this->addChild(pipeLayer);
 
 	this->addChild(scrollLand_f);
 	this->addChild(scrollLand_s);
@@ -101,22 +110,57 @@ void BackGroundLayer::landScrolling(float dt)
 void BackGroundLayer::scrollingStart()
 {
 	this->schedule(CC_SCHEDULE_SELECTOR(BackGroundLayer::landScrolling),0.02f);
+
 }
 
-void BackGroundLayer::scrollingEnd()
+void BackGroundLayer::scrollingEnd(Ref* sender)
 {
+
 	if (this->isScheduled(CC_SCHEDULE_SELECTOR(BackGroundLayer::landScrolling))){
 
 		this->unschedule(CC_SCHEDULE_SELECTOR(BackGroundLayer::landScrolling));
-
+		CCLOG("!!!!!!!!!!!!!!unschedule!!!!!!!!!!!!!");
+		pipeLayer->unscheduleUpdate();
 	}
 	
 }
 
 
 
-void BackGroundLayer::onExit()
-{
-	Layer::onExit();
-	this->scrollingEnd();
+//void BackGroundLayer::onExit()
+//{
+//	Layer::onExit();
+//	this->scrollingEnd(nullptr);
+//}
+
+void BackGroundLayer::initPhysicsAttributes(){
+
+	Size  visibleSize = Director::getInstance()->getVisibleSize();
+	Point originPoint = Director::getInstance()->getVisibleOrigin();
+
+	auto  groundNode = Node::create();
+	float landWidth  = this->getChildByName("land_f")->getContentSize().width;
+	float landHeight = this->getChildByName("land_f")->getContentSize().height;
+	//CCLOG("%f  %f", landWidth, landHeight);
+	auto groundBody = PhysicsBody::create();
+	groundBody->addShape(PhysicsShapeBox::create(Size(landWidth, landHeight)));
+	groundBody->setDynamic(false);
+	groundBody->setGravityEnable(false);
+	groundBody->setLinearDamping(0.0f);
+	groundBody->setCategoryBitmask(ColliderTypeLand);
+	groundBody->setCollisionBitmask(ColliderTypeBird);
+	groundBody->setContactTestBitmask(ColliderTypeBird);
+
+	//
+	groundNode->setPhysicsBody(groundBody);
+	//CCLOG("%f  %f", originPoint.x + visibleSize.width / 2, landHeight / 2);
+	groundNode->setPosition(originPoint.x + visibleSize.width/2, landHeight / 2);
+	this->addChild(groundNode);
+
+}
+
+
+void BackGroundLayer::pipeScrollStart(Ref* sender){
+
+	this->pipeLayer->scheduleUpdate();
 }

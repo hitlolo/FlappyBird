@@ -15,8 +15,10 @@ ________________________________________________________________________________
 #define __FB_BIRD_H__
 
 #include "cocos2d.h"
-#include "AtlasLoader.h"
+#include "GameData.h"
+#include "SimpleAudioEngine.h"
 
+USING_NS_CC;
 
 typedef enum class state_enum{
 	STATE_IDEL = 0,
@@ -56,7 +58,11 @@ public:
 
 	void die();
 
-	void birdRun();
+	void gravityDown();
+
+	void gravityUp();
+
+	void birdRun(BIRD_STATE);
 
 	virtual bool init() override;
 
@@ -64,7 +70,9 @@ public:
 
 	CC_SYNTHESIZE(BIRD_STATE, curState, State);
 
+	void initPhysicsAttributes();
 
+	void update(float dt) override;
 
 };
 
