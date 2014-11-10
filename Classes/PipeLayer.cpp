@@ -25,8 +25,16 @@ void PipeLayer::createPipe()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	std::string pipeName_up;
 	std::string pipeName_down;
-	pipeName_up = PIC_PIPE_DAY_UP;
-	pipeName_down = PIC_PIPE_DAY_DOWN;
+
+	int hour = this->getLocalTime();
+	if (hour>=7 && hour <=19){
+		pipeName_up = PIC_PIPE_DAY_UP;
+		pipeName_down = PIC_PIPE_DAY_DOWN;
+	}
+	else{
+		pipeName_up = PIC_PIPE_NIGHT_UP;
+		pipeName_down = PIC_PIPE_NIGHT_DOWN;
+	}
 
 	for (int i = 0; i < 2; i++){
 
@@ -125,4 +133,16 @@ bool PipeLayer::isGetPoint(Node* pipe){
 void PipeLayer::update(float dt){
 
 	this->pipeMoving();
+}
+
+
+
+int  PipeLayer::getLocalTime()
+{
+
+	struct tm* s_time;
+	time_t t = time(&t);
+	s_time = localtime(&t);
+
+	return s_time->tm_hour;
 }
