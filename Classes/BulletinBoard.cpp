@@ -102,7 +102,7 @@ void BulletinBoard::showGaming(){
 
 void BulletinBoard::showGameOver(){
 
-
+	blinkScreen();
 
 }
 
@@ -187,4 +187,73 @@ void BulletinBoard::removeScoreLabel(){
 
 	this->removeChild(this->scoreLabel);
 
+}
+
+void  BulletinBoard::blinkScreen(){
+
+	auto white = CCSprite::createWithSpriteFrameName("white.png");
+	float scale = (visiableSize.height/white->getContentSize().height);
+	CCLOG("%f", scale);
+	white->setScale(scale);
+	white-> setPosition(originPoint.x + visiableSize.width/2, originPoint.y + visiableSize.height/2);
+	this->addChild(white);
+	auto fadeOut = FadeOut::create(0.1f);
+	auto fadeIn = FadeIn::create(0.1f);
+	CallFunc *actionDone = CallFunc::create(std::bind(&BulletinBoard::fadeinPanel, this));
+	auto blinkAction = Sequence::create(fadeIn, fadeOut, actionDone,nullptr);
+	//CallFunc *actionDone = CallFunc::create(bind(&StatusLayer::fadeInGameOver, this));
+	//auto sequence = Sequence::createWithTwoActions(blinkAction, actionDone);
+	white->stopAllActions();
+	white->runAction(blinkAction);
+}
+
+
+void  BulletinBoard::fadeinPanel(){
+
+	this->removeChild(scoreLabel);
+	//add game over panel
+	auto overSprite = Sprite::createWithSpriteFrameName("text_game_over.png");
+	overSprite->setPosition(originPoint.x + visiableSize.width / 2, originPoint.y + visiableSize.height / 10 * 8);
+	this->addChild(overSprite);
+	//add score panel
+
+	auto scorePanel = Sprite::createWithSpriteFrameName("score_panel.png");
+	scorePanel->setPosition(originPoint.x + visiableSize.width / 2, originPoint.y - scorePanel->getContentSize().height);
+	ActionInterval* panel_up = MoveTo::create(0.2f, Point(originPoint.x + visiableSize.width / 2, originPoint.y + visiableSize.height / 10 * 6));
+	this->addChild(scorePanel);
+	scorePanel->runAction(panel_up);
+
+	//button
+	auto buttonStart_n = Sprite::createWithSpriteFrameName(PIC_B_PLAY);
+	auto buttonStart_p = Sprite::createWithSpriteFrameName(PIC_B_PLAY);
+	buttonStart_n->setPositionY(5);
+
+	auto buttonBoard_n = Sprite::createWithSpriteFrameName(PIC_B_BOARD);
+	auto buttonBoard_p = Sprite::createWithSpriteFrameName(PIC_B_BOARD);
+	buttonBoard_n->setPositionY(5);
+
+	auto item_restart = MenuItemSprite::create(buttonStart_n, buttonStart_p, CC_CALLBACK_1(BulletinBoard::restartGame, this));
+	item_restart->setPosition(Point(originPoint.x + visiableSize.width / 2 - item_restart->getContentSize().width / 2, originPoint.y + visiableSize.height / 10 * 3.7));
+
+	auto item_board = MenuItemSprite::create(buttonBoard_n, buttonBoard_p, CC_CALLBACK_1(BulletinBoard::scoreBoard, this));
+	item_board->setPosition(Point(originPoint.x + visiableSize.width / 2 + item_board->getContentSize().width / 2, originPoint.y + visiableSize.height / 10 * 3.7));
+
+	auto menu = Menu::create(item_restart, item_board, nullptr);
+	menu->setPosition(Point::ZERO);
+	this->addChild(menu);
+
+}
+
+void BulletinBoard::restartGame(Ref* sender){
+
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(M_SWOOSH);
+
+	auto nextScene = GameScene::createScene();
+	TransitionScene *transition = TransitionFade::create(0.2f, nextScene);
+	Director::getInstance()->replaceScene(transition);
+}
+
+void BulletinBoard::scoreBoard(Ref* sender){
+
+	CCLOG("hi,there!");
 }

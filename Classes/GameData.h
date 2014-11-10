@@ -44,7 +44,7 @@ typedef enum :uint8_t {
 
 //button
 #define PIC_B_PLAY           "button_play.png"
-
+#define PIC_B_BOARD          "button_score.png"
 
 //music
 #define M_DIE                "sfx_die.ogg"
@@ -55,7 +55,7 @@ typedef enum :uint8_t {
 
 //pipe attributes
 #define THROUGH_HEIGHT		  100										//小鸟通过两个管子间的高度
-#define PIPE_RANGE			  200										//管子移动Y值的范围
-#define READY_DISTANCE        100
+#define PIPE_RANGE			  150										//管子移动Y值的范围
+#define READY_DISTANCE        50
 #define PIPE_HEIGHT           320
 

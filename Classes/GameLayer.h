@@ -64,7 +64,8 @@ private:
 	void initPhysicsAttributes();
 	
 	//void TextureCache::addImageAsync(const std::string &path, const std::function<void(Texture2D*)>& callback)
-	void readyGame(const std::function<void(void)> &callback);
+	//void readyGame(const std::function<void(void)> &callback);
+	void readyGame();
 
 	void steadyGame();
 

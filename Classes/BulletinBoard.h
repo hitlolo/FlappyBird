@@ -20,6 +20,7 @@ ________________________________________________________________________________
 #include "GameData.h"
 #include "BulletinDelegate.h"
 #include "GameLayer.h"
+#include "GameScene.h"
 
 USING_NS_CC;
 
@@ -70,6 +71,13 @@ private:
 
 	void    removeScoreLabel();
 
+	void    blinkScreen();
+
+	void    fadeinPanel();
+
+	void    restartGame(Ref* sender);
+
+	void    scoreBoard(Ref* sender);
 };
 
 

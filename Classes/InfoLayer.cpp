@@ -74,7 +74,8 @@ void InfoLayer::gameStartCallback(Ref* sender)
 
 void InfoLayer::playGame()
 {
-	
+
+	CCLOG("hi,there!");
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(M_SWOOSH);
 	auto nextScene = GameScene::createScene();
 	TransitionScene *transition = TransitionFade::create(0.2f, nextScene);

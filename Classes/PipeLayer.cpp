@@ -36,7 +36,7 @@ void PipeLayer::createPipe()
 		pipeName_down = PIC_PIPE_NIGHT_DOWN;
 	}
 
-	for (int i = 0; i < 2; i++){
+	for (int i = 0; i < 3; i++){
 
 		//up 
 		auto pipeSprite_up   = Sprite::createWithSpriteFrameName(pipeName_up);
@@ -69,7 +69,7 @@ void PipeLayer::createPipe()
 		pipeNode->addChild(pipeSprite_up);
 		pipeNode->addChild(pipeSprite_down);
 
-		pipeNode->setPosition(visibleSize.width + i*PIPE_RANGE + READY_DISTANCE, getRandomHeight());
+		pipeNode->setPosition((visibleSize.width + i*PIPE_RANGE) + READY_DISTANCE, getRandomHeight());
 
 		this->pipeVector.pushBack(pipeNode);
 		
@@ -82,7 +82,7 @@ void PipeLayer::createPipe()
 int  PipeLayer::getRandomHeight(){
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
-	return rand() % (int)(2 * PIPE_HEIGHT + THROUGH_HEIGHT - visibleSize.height -80);
+	return rand() % (int)(2 * PIPE_HEIGHT + THROUGH_HEIGHT - visibleSize.height);
 
 }
 
@@ -105,8 +105,21 @@ void PipeLayer::pipeMoving(){
 
 		if (pipeNode->getPositionX() < -(pipeNode->getContentSize().width + 26)) {
 			
-			pipeNode->setPosition(visibleSize.width + 60,this->getRandomHeight());		
 			pipeNode->setTag(0);
+			int i = pipeVector.getIndex(pipeNode);
+			switch (i){
+			case 0:
+				pipeNode->setPosition((pipeVector.at(2))->getPositionX() + PIPE_RANGE, this->getRandomHeight());
+				break;
+			case 1:
+				pipeNode->setPosition((pipeVector.at(0))->getPositionX() + PIPE_RANGE, this->getRandomHeight());
+				break;
+			case 2:
+				pipeNode->setPosition((pipeVector.at(1))->getPositionX() + PIPE_RANGE, this->getRandomHeight());
+				break;
+			}
+			
+			
 		}
 
 		

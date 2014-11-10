@@ -154,6 +154,8 @@ void BirdSprite::die()
 	//设置角度，头向下...
 	this->setRotation(90);
 
+	this->runAction(FadeOut::create(0.9f));
+
 
 }
 
