@@ -76,7 +76,7 @@ void InfoLayer::playGame()
 {
 	
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(M_SWOOSH);
-	auto nextScene = GameScene::create();
+	auto nextScene = GameScene::createScene();
 	TransitionScene *transition = TransitionFade::create(0.2f, nextScene);
 	Director::getInstance()->replaceScene(transition);
 }

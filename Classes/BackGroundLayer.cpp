@@ -23,15 +23,13 @@ bool BackGroundLayer::init()
 	this->initBackGround();
 	this->initPhysicsAttributes();
 	this->scrollingStart();
-	__NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(BackGroundLayer::scrollingEnd), MSG_GAME_STOP, nullptr);
-	__NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(BackGroundLayer::pipeScrollStart), MSG_PIPE_START, nullptr);
+
 	return true;
 }
 
 void BackGroundLayer::onExit(){
 	Layer::onExit();
-	__NotificationCenter::getInstance()->removeObserver(this, MSG_GAME_STOP);
-	__NotificationCenter::getInstance()->removeObserver(this, MSG_PIPE_START);
+	this->overGame();
 }
 
 int BackGroundLayer::getLocalTime()
@@ -88,7 +86,11 @@ void BackGroundLayer::initBackGround()
 
 }
 
+int BackGroundLayer::getCurPoint(){
 
+	return this->getPipeLayer()->getCurPoint();
+
+}
 
 void BackGroundLayer::landScrolling(float dt)
 {
@@ -113,19 +115,26 @@ void BackGroundLayer::scrollingStart()
 
 }
 
-void BackGroundLayer::scrollingEnd(Ref* sender)
+void BackGroundLayer::scrollingEnd()
 {
 
 	if (this->isScheduled(CC_SCHEDULE_SELECTOR(BackGroundLayer::landScrolling))){
 
 		this->unschedule(CC_SCHEDULE_SELECTOR(BackGroundLayer::landScrolling));
-		CCLOG("!!!!!!!!!!!!!!unschedule!!!!!!!!!!!!!");
-		pipeLayer->unscheduleUpdate();
 	}
 	
 }
 
+void BackGroundLayer::startGame(){
 
+	this->pipeLayer->startGame();
+}
+
+void BackGroundLayer::overGame(){
+
+	this->scrollingEnd();
+	this->pipeLayer->overGame();
+}
 
 //void BackGroundLayer::onExit()
 //{
@@ -160,7 +169,7 @@ void BackGroundLayer::initPhysicsAttributes(){
 }
 
 
-void BackGroundLayer::pipeScrollStart(Ref* sender){
+void BackGroundLayer::setPipeDelegator(BulletinDelegate* delegator){
 
-	this->pipeLayer->scheduleUpdate();
+	this->pipeLayer->setDelegator(delegator);
 }

@@ -88,8 +88,9 @@ void PipeLayer::pipeMoving(){
 		if (isGetPoint(pipeNode) && pipeNode->getTag()==0){
 			
 			curPoint++;
-			__NotificationCenter::getInstance()->postNotification(MSG_GET_POINT);
-			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(M_GETPOINT);
+			//__NotificationCenter::getInstance()->postNotification(MSG_GET_POINT);
+			//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(M_GETPOINT);
+			this->getDelegator()->updateScore(curPoint);
 			pipeNode->setTag(1);
 		}
 
@@ -104,7 +105,13 @@ void PipeLayer::pipeMoving(){
 	}
 }
 
-void PipeLayer::pipeStop(){
+
+void PipeLayer::startGame(){
+
+	this->scheduleUpdate();
+}
+
+void PipeLayer::overGame(){
 
 	this->unscheduleUpdate();
 }

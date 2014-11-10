@@ -64,4 +64,4 @@ typedef enum :uint8_t {
 //Physics
 #define GRAVITY											Point(0,-980)							//重力加速度
 #define VELOCITY										Point(0,260)							//小鸟点击向上飞速度
-#define THROUGH_HEIGHT									120										//小鸟通过两个管子间的高度
+

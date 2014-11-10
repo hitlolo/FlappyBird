@@ -7,6 +7,7 @@
 #include "GameData.h"
 #include "Time.h"
 #include "SimpleAudioEngine.h"
+#include "BulletinDelegate.h"
 
 USING_NS_CC;
 
@@ -18,13 +19,13 @@ public:
 
 	virtual bool init() override;
 
-	void startGaming();
+	void startGame();
 
-	void getPoint();
-
-	void pipeStop();
+	void overGame();
 
 	CC_SYNTHESIZE(int,curPoint,CurPoint);
+
+	CC_SYNTHESIZE(BulletinDelegate*,pointDelegate,Delegator);
 
 private:
 	
@@ -37,7 +38,6 @@ private:
 	void update(float) override;
 
 	bool isGetPoint(Node*);
-
 
 	int  getRandomHeight();
 

@@ -34,15 +34,14 @@ public:
 
 	virtual bool init();
 
-
-
-
 	virtual void showBulletin(int) override;
 
 	virtual void updateScore(int) override;
 
 private:
 	
+	void    loadRes();
+
 	virtual void showReady() override;
 
 	virtual void showSteady(const std::function<void(void)> &callback) override;
@@ -65,13 +64,9 @@ private:
 
 	int     count;
 
-	void    loadRes();
-
 	void    countDown();
 
 	void    countDownAnimation(float);
-
-	void    sendGameStartMsg();
 
 	void    removeScoreLabel();
 

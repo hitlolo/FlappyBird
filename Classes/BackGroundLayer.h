@@ -21,6 +21,7 @@ ________________________________________________________________________________
 #include "PipeLayer.h"
 
 
+
 USING_NS_CC;
 
 class BackGroundLayer :public Layer{
@@ -33,10 +34,19 @@ public:
 
 	CREATE_FUNC(BackGroundLayer);
 
+	CC_SYNTHESIZE(PipeLayer*, pipeLayer,PipeLayer);
 
+	void startGame();
 
+	void overGame();
+
+	void setPipeDelegator(BulletinDelegate*);
+
+	int getCurPoint();
 
 private:
+
+	void initPhysicsAttributes();
 
 	void onExit() override;
 
@@ -48,13 +58,10 @@ private:
 
 	void scrollingStart();
 	
-	void scrollingEnd(Ref* sender);
+	void scrollingEnd();
 
-	void initPhysicsAttributes();
 
-	PipeLayer* pipeLayer;
 
-	void pipeScrollStart(Ref* sender);
 };
 
 

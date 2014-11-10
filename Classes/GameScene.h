@@ -17,14 +17,13 @@ ________________________________________________________________________________
 
 #include "cocos2d.h"
 #include "GameData.h"
-#include "BackGroundLayer.h"
-#include "BulletinBoard.h"
+
 #include "GameLayer.h"
 #include "TouchLayer.h" 
 
 USING_NS_CC;
 
-class GameScene :public Scene{
+class GameScene :public Layer{
 
 private:
 
@@ -32,11 +31,11 @@ private:
 
 public:
 
+	static Scene* createScene();
+
 	virtual bool init(); 
 
 	CREATE_FUNC(GameScene);
-
-	void initPhysicsAttributes();
 };
 
 

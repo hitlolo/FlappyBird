@@ -22,7 +22,7 @@ bool BulletinBoard::init(){
 	}
 	count = 3;
 	this->loadRes();
-	this->showReady();
+	//this->showReady();
 
 	return true;
 	
@@ -43,7 +43,7 @@ void BulletinBoard::showBulletin(int GAME_STATE){
 	switch (GAME_STATE){
 
 	case READY:
-		//this->showReady();
+		this->showReady();
 		break;
 	case STEADY:
 		this->showSteady(CC_CALLBACK_0(BulletinBoard::countDown, this));
@@ -153,34 +153,33 @@ void BulletinBoard::countDownAnimation(float dt){
 		auto action = ScaleBy::create(0.3f, 1.3f);
 		auto action_ = action->reverse();
 		scoreLabel->runAction(Sequence::create(action, action_, nullptr));
-		CCLOG("%s", scoreLabel->getString().c_str());
-
 	}
 
 	auto str = String::createWithFormat("%d", count);
 	scoreLabel->setString(str->getCString());
-	//auto action = Spawn::create(ScaleTo::create(0.3f, 1.4f), FadeOut::create(0.2f), nullptr);
-	//auto action_ = Sequence::create(action,FadeIn::create(0.0f),nullptr);
 	
 	// start game
 	if (count == 0)
 	{
 		this->unschedule(CC_SCHEDULE_SELECTOR(BulletinBoard::countDownAnimation));
-		this->sendGameStartMsg();
+		
+		//game start
+		auto game = dynamic_cast<GameLayer*>(this->getParent());
+		if (!game)
+			return;
+		else
+			game->startGame();
 	}
 
-}
-
-
-void BulletinBoard::sendGameStartMsg(){
-	__NotificationCenter::getInstance()->postNotification(MSG_GAME_START);
 }
 
 
 void BulletinBoard::updateScore(int score){
 	auto str = String::createWithFormat("%d", score);
 	scoreLabel->setString(str->getCString());
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(M_GETPOINT);
 }
+
 
 void BulletinBoard::removeScoreLabel(){
 

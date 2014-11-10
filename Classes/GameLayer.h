@@ -20,9 +20,9 @@ ________________________________________________________________________________
 #include "GameData.h"
 #include "BirdSprite.h"
 #include "TouchDelegate.h"
-#include "BulletinDelegate.h"
 #include "SimpleAudioEngine.h"
-
+#include "BackGroundLayer.h"
+#include "BulletinBoard.h"
 
 
 USING_NS_CC;
@@ -45,7 +45,7 @@ public:
 
 	virtual void onTouch() override;
 
-	void loadRes();
+	void startGame();
 
 	CREATE_FUNC(GameLayer);
 
@@ -55,17 +55,20 @@ public:
 
 private:
 
-	void initPhysicsAttributes();
+	BackGroundLayer* backLayer;
 
 	BirdSprite* birdSprite;
 
+	void loadRes();
+
+	void initPhysicsAttributes();
 	
 	//void TextureCache::addImageAsync(const std::string &path, const std::function<void(Texture2D*)>& callback)
 	void readyGame(const std::function<void(void)> &callback);
 
 	void steadyGame();
 
-	void startGame(Ref* sender);
+	
 
 	void onGaming();
 

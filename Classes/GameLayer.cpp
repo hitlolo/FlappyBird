@@ -7,11 +7,17 @@ bool GameLayer::init(){
 		return false;
 	}
 
+
 	this->loadRes();
 
 	this->initPhysicsAttributes();
 
 	this->setGameState(READY);
+
+
+	//start game
+
+	this->readyGame(CC_CALLBACK_0(GameLayer::steadyGame, this));
 
 	return true;
 }
@@ -24,15 +30,20 @@ void GameLayer::loadRes(){
 	Size visiableSize = Director::getInstance()->getVisibleSize();
 	Point originPoint = Director::getInstance()->getVisibleOrigin();
 
+
+	backLayer = BackGroundLayer::create();
+	this->addChild(backLayer);
+
+
+	auto boardLayer = BulletinBoard::create();
+	this->addChild(boardLayer);
+
 	birdSprite = BirdSprite::create();
 	birdSprite->setPosition(originPoint.x + visiableSize.width/4,originPoint.y + visiableSize.height/2);
 	this->addChild(birdSprite);
 
-	//pipeLayer = PipeLayer::create();
-	//this->addChild(pipeLayer); 
-
-	__NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(GameLayer::startGame), MSG_GAME_START, nullptr);
-	__NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(GameLayer::getPoint), MSG_GET_POINT, nullptr);
+	this->setbulletinDelegator(boardLayer);
+	this->backLayer->setPipeDelegator(boardLayer);
 
 }
 
@@ -50,7 +61,7 @@ void GameLayer::onTouch(){
 	switch(curState){
 
 	case READY:
-		this->readyGame(CC_CALLBACK_0(GameLayer::steadyGame, this));
+		return;
 		break;
 	case STEADY:
 		return;
@@ -84,24 +95,23 @@ void GameLayer::steadyGame(){
 	
 }
 
-void  GameLayer::startGame(Ref* sender){
+void  GameLayer::startGame(){
 
 	this->setGameState(GAMING);
 	this->getbulletinDelegator()->showBulletin(getGameState());
-	birdSprite->birdRun(BIRD_STATE::STATE_FLY);
-	__NotificationCenter::getInstance()->postNotification(MSG_PIPE_START);
-	//pipeLayer->scheduleUpdate();
-
+	this->birdSprite->birdRun(BIRD_STATE::STATE_FLY);
+	this->backLayer->startGame();
 }
 
 
 
 void  GameLayer::overGame(){
 
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(M_HIT);
 	this->birdSprite->birdRun(BIRD_STATE::STATE_DIE);
 	this->setGameState(GAME_STATE::OVER);
-	__NotificationCenter::getInstance()->postNotification(MSG_GAME_STOP);
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(M_HIT);
+	this->backLayer->overGame();
+
 
 }
 

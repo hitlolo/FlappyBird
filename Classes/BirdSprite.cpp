@@ -45,6 +45,21 @@ bool BirdSprite::init()
 	return true;
 }
 
+void BirdSprite::initPhysicsAttributes(){
+
+	PhysicsBody *body = PhysicsBody::create();
+	body->addShape(PhysicsShapeCircle::create(BIRD_RADIUS));
+	body->setCategoryBitmask(ColliderTypeBird);
+	body->setCollisionBitmask(ColliderTypeLand | ColliderTypePip);
+	body->setContactTestBitmask(ColliderTypeLand | ColliderTypePip);
+
+	body->setDynamic(true);
+	body->setLinearDamping(1.0f);
+	body->setGravityEnable(false);
+	this->setPhysicsBody(body);
+
+}
+
 
 int BirdSprite::selectRandomColor()
 {
@@ -163,22 +178,6 @@ void BirdSprite::birdRun(BIRD_STATE curState)
 			CCLOG("BUG HERE IN BIRD RUN!");
 			return;
 	}
-
-}
-
-
-void BirdSprite::initPhysicsAttributes(){
-
-	PhysicsBody *body = PhysicsBody::create();
-	body->addShape(PhysicsShapeCircle::create(BIRD_RADIUS));
-	body->setCategoryBitmask(ColliderTypeBird);
-	body->setCollisionBitmask(ColliderTypeLand | ColliderTypePip);
-	body->setContactTestBitmask(ColliderTypeLand | ColliderTypePip);
-
-	body->setDynamic(true);
-	body->setLinearDamping(1.0f);
-	body->setGravityEnable(false);
-	this->setPhysicsBody(body);
 
 }
 

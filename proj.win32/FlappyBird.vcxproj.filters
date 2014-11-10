@@ -70,7 +70,7 @@
       <Filter>classes\Gaming</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\PipeLayer.cpp">
-      <Filter>classes\Gaming</Filter>
+      <Filter>classes\GameReady</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -123,7 +123,7 @@
       <Filter>classes\Gaming</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PipeLayer.h">
-      <Filter>classes\Gaming</Filter>
+      <Filter>classes\GameReady</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
