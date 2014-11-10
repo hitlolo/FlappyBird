@@ -30,9 +30,10 @@ bool BulletinBoard::init(){
 
 void BulletinBoard::loadRes(){
 
-	this->originPoint  = Director::getInstance()->getVisibleOrigin();
-	this->visiableSize = Director::getInstance()->getVisibleSize();
-	this->newRecord	   = false;
+	this->originPoint    = Director::getInstance()->getVisibleOrigin();
+	this->visiableSize   = Director::getInstance()->getVisibleSize();
+	//this->newRecord	     = false;
+	this->fireworkSprite = nullptr;
 }
 
 
@@ -193,7 +194,6 @@ void  BulletinBoard::blinkScreen(){
 
 	auto white = CCSprite::createWithSpriteFrameName("white.png");
 	float scale = (visiableSize.height/white->getContentSize().height);
-	CCLOG("%f", scale);
 	white->setScale(scale);
 	white-> setPosition(originPoint.x + visiableSize.width/2, originPoint.y + visiableSize.height/2);
 	this->addChild(white);
@@ -201,8 +201,7 @@ void  BulletinBoard::blinkScreen(){
 	auto fadeIn = FadeIn::create(0.1f);
 	CallFunc *actionDone = CallFunc::create(std::bind(&BulletinBoard::fadeinPanel, this));
 	auto blinkAction = Sequence::create(fadeIn, fadeOut, actionDone,nullptr);
-	//CallFunc *actionDone = CallFunc::create(bind(&StatusLayer::fadeInGameOver, this));
-	//auto sequence = Sequence::createWithTwoActions(blinkAction, actionDone);
+
 	white->stopAllActions();
 	white->runAction(blinkAction);
 }
@@ -210,7 +209,11 @@ void  BulletinBoard::blinkScreen(){
 
 void  BulletinBoard::fadeinPanel(){
 
+	//get point
+	sscanf(scoreLabel->getString().c_str(), "%d", &curScore);
+	CCLOG("%d,current score!",curScore);
 	this->removeChild(scoreLabel);
+
 	//add game over panel
 	auto overSprite = Sprite::createWithSpriteFrameName("text_game_over.png");
 	overSprite->setPosition(originPoint.x + visiableSize.width / 2, originPoint.y + visiableSize.height / 10 * 8);
@@ -222,6 +225,64 @@ void  BulletinBoard::fadeinPanel(){
 	ActionInterval* panel_up = MoveTo::create(0.2f, Point(originPoint.x + visiableSize.width / 2, originPoint.y + visiableSize.height / 10 * 6));
 	this->addChild(scorePanel);
 	scorePanel->runAction(panel_up);
+	//add score
+
+	scoreLabel = Label::createWithBMFont(FONT_SMALL, "0", TextHAlignment::CENTER);
+	scoreLabel->setAnchorPoint(Point(1, 1));
+	scoreLabel->setPosition(scorePanel->getContentSize().width - 28, scorePanel->getContentSize().height -32);
+	scorePanel->addChild(scoreLabel);
+	//score animation
+	if (curScore > 0)
+	{
+		this->count = 0;
+		this->schedule(CC_SCHEDULE_SELECTOR(BulletinBoard::addScoreAnimation), 0.3f);
+	}
+
+	//best score
+	int bestScore = UserDefault::getInstance()->getIntegerForKey("best_score");
+
+	String *str = String::createWithFormat("%d", ((curScore > bestScore)? curScore:bestScore));
+	auto bestLabel = Label::createWithBMFont(FONT_SMALL, str->getCString(), TextHAlignment::CENTER);
+	bestLabel->setAnchorPoint(Point(1, 1));
+	bestLabel->setPosition(scorePanel->getContentSize().width - 28, 50);
+	scorePanel->addChild(bestLabel);
+
+	if (curScore > bestScore){
+
+		bestScore = curScore;
+		UserDefault::getInstance()->setIntegerForKey("best_score", bestScore);
+
+		auto newTag = Sprite::createWithSpriteFrameName("new.png");
+		newTag->setAnchorPoint(Point(1, 1));
+		newTag->setPosition(scorePanel->getContentSize().width - 28 - bestLabel->getContentSize().width -5, 48);
+		scorePanel->addChild(newTag);
+
+	}
+
+	//medal
+
+	if (curScore >= 5){
+		
+		std::string medalName;
+		if (curScore < 10){
+			medalName = "medals_0.png";
+		}
+		else if (curScore >= 10 && curScore <= 15){
+			medalName = "medals_1.png";
+		}
+		else if (curScore > 15 && curScore <= 20){
+			medalName = "medals_2.png";
+		}
+		else if (curScore > 20 ){
+			medalName = "medals_3.png";
+		}
+		this->getFirework();
+		auto medalsSprite = Sprite::createWithSpriteFrameName(medalName.c_str());
+		medalsSprite->addChild(this->fireworkSprite);
+		medalsSprite->setPosition(54, 58);
+		scorePanel->addChild(medalsSprite);
+
+	}
 
 	//button
 	auto buttonStart_n = Sprite::createWithSpriteFrameName(PIC_B_PLAY);
@@ -256,4 +317,49 @@ void BulletinBoard::restartGame(Ref* sender){
 void BulletinBoard::scoreBoard(Ref* sender){
 
 	CCLOG("hi,there!");
+}
+
+void BulletinBoard::addScoreAnimation(float dt){
+
+	++count;
+
+	auto str = String::createWithFormat("%d", count);
+	scoreLabel->setString(str->getCString());
+
+	// start game
+	if (count == curScore)
+	{
+		this->unschedule(CC_SCHEDULE_SELECTOR(BulletinBoard::addScoreAnimation));
+	}
+	
+}
+
+void BulletinBoard::getFirework(){
+
+	std::string filename;
+	this->fireworkSprite = Sprite::createWithSpriteFrameName("blink_00.png");
+	Animation* animation = Animation::create();
+	for (int i = 0; i < 3; i++){
+		filename = String::createWithFormat("blink_0%d.png", i)->getCString();
+		SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(filename.c_str());
+		animation->addSpriteFrame(frame);
+	}
+	for (int i = 2; i >= 0; i--){
+		filename = String::createWithFormat("blink_0%d.png", i)->getCString();
+		SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(filename.c_str());
+		animation->addSpriteFrame(frame);
+	}
+	animation->setDelayPerUnit(0.1f);
+	auto animate = Animate::create(animation);
+	auto actionDone = CallFunc::create(std::bind(&BulletinBoard::showFirework, this));
+	auto sequence = Sequence::createWithTwoActions(animate, actionDone);
+	fireworkSprite->runAction(RepeatForever::create(sequence));
+}
+
+void  BulletinBoard::showFirework(){
+	if (fireworkSprite != nullptr){
+
+		Size activeSize = this->fireworkSprite->getParent()->getContentSize();
+		this->fireworkSprite->setPosition(rand() % ((int)(activeSize.width)), rand() % ((int)(activeSize.height)));
+	}
 }

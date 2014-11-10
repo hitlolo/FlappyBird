@@ -75,9 +75,9 @@ private:
 
 	void overGame();
 
-	int  curScore;
+	//int  curScore;
 
-	void getPoint(Ref* sender);
+	//void getPoint(Ref* sender);
 
 	bool onContact(PhysicsContact& contact);
 

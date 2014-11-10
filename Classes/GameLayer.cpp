@@ -27,7 +27,7 @@ bool GameLayer::init(){
 
 void GameLayer::loadRes(){
 
-	curScore = 0;
+	//curScore = 0;
 
 	Size visiableSize = Director::getInstance()->getVisibleSize();
 	Point originPoint = Director::getInstance()->getVisibleOrigin();
@@ -118,6 +118,7 @@ void  GameLayer::overGame(){
 	this->backLayer->overGame();
 	this->getbulletinDelegator()->showBulletin(getGameState());
 
+	//score
 
 }
 
@@ -137,8 +138,8 @@ void GameLayer::onGaming(){
 }
 
 
-void  GameLayer::getPoint(Ref* sender){
-	this->curScore++;
-	this->bulletinDelegated->updateScore(curScore);
-
-}
+//void  GameLayer::getPoint(Ref* sender){
+//	this->curScore++;
+//	this->bulletinDelegated->updateScore(curScore);
+//
+//}

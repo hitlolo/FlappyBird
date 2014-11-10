@@ -61,7 +61,9 @@ private:
 
 	Label*  scoreLabel;
 	
-	bool    newRecord;
+	//bool    newRecord;
+
+	int     curScore;
 
 	int     count;
 
@@ -78,6 +80,14 @@ private:
 	void    restartGame(Ref* sender);
 
 	void    scoreBoard(Ref* sender);
+
+	void    addScoreAnimation(float dt);
+
+	Sprite* fireworkSprite;
+
+	void    getFirework();
+	
+	void    showFirework();
 };
 
 

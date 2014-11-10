@@ -36,6 +36,7 @@ typedef enum :uint8_t {
 
 //font
 #define FONT_BIG             "font1.fnt"
+#define FONT_SMALL           "font2.fnt"
 
 //physics attribute
 #define GRAVITY				 Point(0,-980)							//重力加速度
