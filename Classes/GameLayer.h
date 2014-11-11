@@ -69,15 +69,9 @@ private:
 
 	void steadyGame();
 
-	
-
 	void onGaming();
 
 	void overGame();
-
-	//int  curScore;
-
-	//void getPoint(Ref* sender);
 
 	bool onContact(PhysicsContact& contact);
 

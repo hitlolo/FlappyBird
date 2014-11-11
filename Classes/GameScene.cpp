@@ -25,22 +25,18 @@ Scene * GameScene::createScene()
 	return scene;
 }
 
-
+/* @brif
+** two children
+* 1.game layer which have the background and bulletinboard,and also deal about the game method.
+* 2.touch layer, which is designed to deal with the touch action.
+*/
 bool GameScene::init(){
 
 	if (!Layer::init()){
 		return false;
 	}
 
-	//auto backLayer = BackGroundLayer::create();
-	//this->addChild(backLayer);
-	//
-
-	//auto bulletinLayer = BulletinBoard::create();
-	//this->addChild(bulletinLayer);
-
 	auto gameLayer = GameLayer::create();
-	//gameLayer->setbulletinDelegator(bulletinLayer);
 	this->addChild(gameLayer);
 
 	auto touchLayer = TouchLayer::create();

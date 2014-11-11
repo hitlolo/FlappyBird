@@ -35,8 +35,9 @@ public:
 
 	virtual bool init();
 
+	//deal with gamelayer's all states' infomation showing
 	virtual void showBulletin(int) override;
-
+	//deal with pipelayer's score-add showing
 	virtual void updateScore(int) override;
 
 private:
@@ -63,16 +64,19 @@ private:
 	
 	//bool    newRecord;
 
-	int     curScore;
-
+	//the ready state's counting down animation.
 	int     count;
 
 	void    countDown();
 
 	void    countDownAnimation(float);
 
+	//score
+	int     curScore;
+
 	void    removeScoreLabel();
 
+	//game over
 	void    blinkScreen();
 
 	void    fadeinPanel();
@@ -81,8 +85,10 @@ private:
 
 	void    scoreBoard(Ref* sender);
 
+	//score panel 's score-adding animation
 	void    addScoreAnimation(float dt);
 
+	//medal's blink animation
 	Sprite* fireworkSprite;
 
 	void    getFirework();

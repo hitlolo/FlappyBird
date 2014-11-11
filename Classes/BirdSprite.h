@@ -40,17 +40,28 @@ private:
 
 	int  selectRandomColor();
 
+	void initAnimation(std::string name, int img_count, float ft);
+
 	Action* actionIdle;
 
 	Action* actionSwing;
 
-	void initAnimation(std::string name, int img_count, float ft);
-
+	
 public:
 
 	BirdSprite();
 
 	virtual ~BirdSprite();
+
+	virtual bool init() override;
+
+	void initPhysicsAttributes();
+
+	void update(float dt) override;
+
+	CREATE_FUNC(BirdSprite);
+
+	CC_SYNTHESIZE(BIRD_STATE, curState, State);
 
 	void idle();
 
@@ -62,17 +73,8 @@ public:
 
 	void gravityUp();
 
+	//call the idle() fly() die() depends on the state
 	void birdRun(BIRD_STATE);
-
-	virtual bool init() override;
-
-	CREATE_FUNC(BirdSprite);
-
-	CC_SYNTHESIZE(BIRD_STATE, curState, State);
-
-	void initPhysicsAttributes();
-
-	void update(float dt) override;
 
 };
 

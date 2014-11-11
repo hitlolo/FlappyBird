@@ -33,8 +33,10 @@ private:
 	
 	void loadInfo();
 
+	//button callback function
 	void gameStartCallback(Ref* sender);
 
+	//game start
 	void playGame();
 };
 

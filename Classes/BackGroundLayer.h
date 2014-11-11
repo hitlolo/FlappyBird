@@ -30,29 +30,31 @@ public:
 
 	virtual bool init() override;
 
-	//void onExit() override;
 
 	CREATE_FUNC(BackGroundLayer);
 
+	//background layer's child, pipelayer, which deal about the pipes during  gaming.
 	CC_SYNTHESIZE(PipeLayer*, pipeLayer,PipeLayer);
 
+	
 	void startGame();
 
 	void overGame();
 
-	void setPipeDelegator(BulletinDelegate*);
-
 	int getCurPoint();
 
+	void setPipeDelegator(BulletinDelegate*);
+
+
 private:
+
+	void initBackGround();
 
 	void initPhysicsAttributes();
 
 	void onExit() override;
 
-	int getLocalTime();
-
-	void initBackGround();
+	int  getLocalTime();
 	
 	void landScrolling(float dt);
 

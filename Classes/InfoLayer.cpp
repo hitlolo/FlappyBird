@@ -51,7 +51,9 @@ void InfoLayer::loadInfo()
 	//MenuItemSprite * MenuItemSprite::create(Node* normalSprite, Node* selectedSprite, Ref* target, SEL_MenuHandler selector)
 	//typedef std::function<void(Ref*)> ccMenuCallback;
 	//#define CC_CALLBACK_1(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, ##__VA_ARGS__)
+	
 
+	//menu
 	auto menuItem = MenuItemSprite::create(buttonStart_n, buttonStart_p, CC_CALLBACK_1(InfoLayer::gameStartCallback, this));
 	menuItem->setPosition( Point( originPoint.x + visiableSize.width/2 , originPoint.y + visiableSize.height/10 * 4) );
 	auto menu     = Menu::create(menuItem,nullptr);
@@ -68,10 +70,14 @@ void InfoLayer::loadInfo()
 
 void InfoLayer::gameStartCallback(Ref* sender)
 {
-
 	this->playGame();
 }
 
+/* @brif
+** 
+*  Go to the next scene. 
+*  GameScene is the main scene of the game!
+*/
 void InfoLayer::playGame()
 {
 

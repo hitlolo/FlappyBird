@@ -20,9 +20,9 @@ bool BulletinBoard::init(){
 	if (!Layer::init()){
 		return false;
 	}
+	//initialize the counting down number
 	count = 3;
 	this->loadRes();
-	//this->showReady();
 
 	return true;
 	
@@ -32,7 +32,6 @@ void BulletinBoard::loadRes(){
 
 	this->originPoint    = Director::getInstance()->getVisibleOrigin();
 	this->visiableSize   = Director::getInstance()->getVisibleSize();
-	//this->newRecord	     = false;
 	this->fireworkSprite = nullptr;
 }
 
@@ -78,11 +77,13 @@ void BulletinBoard::showReady(){
 
 }
 
+//steady state
+//1.
 void BulletinBoard::showSteady(const std::function<void(void)> &callback){
 
 	tutorialSprite->stopAllActions();
-	auto scale = CCScaleBy::create(0.2f,1.8f);
-	auto fade = CCFadeOut::create(0.3f);
+	auto scale   = CCScaleBy::create(0.2f,1.8f);
+	auto fade    = CCFadeOut::create(0.3f);
 	auto fadeout = Spawn::createWithTwoActions(scale,fade);
 	this->readySprite->runAction(fadeout);
 	this->tutorialSprite->runAction(CCFadeOut::create(0.3f));
@@ -91,48 +92,10 @@ void BulletinBoard::showSteady(const std::function<void(void)> &callback){
 
 }
 
-void BulletinBoard::showGaming(){
-
-	//this->scoreSprite = Sprite::createWithSpriteFrameName("font_048.png");
-	//scoreSprite->setPosition(originPoint.x + visiableSize.width / 2, originPoint.y + visiableSize.height / 10 * 8);
-	//scoreSprite->setName(NAME_SCORE);
-	//this->addChild(scoreSprite);
-
-
-}
-
-void BulletinBoard::showGameOver(){
-
-	blinkScreen();
-
-}
-
-
+//steady state
+//2.
 void BulletinBoard::countDown(){
 
-	//Vector<SpriteFrame*> vector;
-	//vector.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("font_051.png"));
-	//vector.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("font_050.png"));
-	//vector.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("font_049.png"));
-	//auto animation = Animation::createWithSpriteFrames(vector);
-	//animation->setDelayPerUnit(1.0f);
-	//auto animate = Animate::create(animation);
-	//auto countdown = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("font_051.png"));
-	//countdown->setPosition(originPoint.x + visiableSize.width/2, originPoint.y + visiableSize.height/10 *8);
-	//this->addChild(countdown);
-	////CallFunc * CallFunc::create(const std::function<void()> &func)
-	//auto action = Sequence::create(animate, FadeOut::create(0.2f), CallFunc::create(CC_CALLBACK_0(BulletinBoard::sendGameStartMsg, this)), nullptr);
-	//countdown->runAction(action);
-
-	//Label
-
-	////初始化分数
-	//score = 0;
-	////这是自定义字体的使用
-	//auto str = __String::createWithFormat("%d", score);
-	//numberLabel = Label::createWithBMFont("font1.fnt", str->getCString());
-	//numberLabel->setPosition(Point(origin.x + visibleSize.width / 2, origin.y + visibleSize.height*0.85));
-	//this->addChild(numberLabel);
 	auto str   = String::createWithFormat("%d",count);
 	scoreLabel = Label::createWithBMFont(FONT_BIG,str->getCString());
 	scoreLabel->setPosition(originPoint.x + visiableSize.width / 2, originPoint.y + visiableSize.height / 10 * 8);
@@ -141,12 +104,11 @@ void BulletinBoard::countDown(){
 	{
 		this->schedule(CC_SCHEDULE_SELECTOR(BulletinBoard::countDownAnimation), 1.0f);
 	}
-
-
-
 	
 }
 
+//steady state
+//3.
 void BulletinBoard::countDownAnimation(float dt){
 
 	--count;
@@ -177,6 +139,22 @@ void BulletinBoard::countDownAnimation(float dt){
 }
 
 
+//gaming state
+//1.
+
+// moved to the scoreLabel
+void BulletinBoard::showGaming(){
+
+	//this->scoreSprite = Sprite::createWithSpriteFrameName("font_048.png");
+	//scoreSprite->setPosition(originPoint.x + visiableSize.width / 2, originPoint.y + visiableSize.height / 10 * 8);
+	//scoreSprite->setName(NAME_SCORE);
+	//this->addChild(scoreSprite);
+
+}
+
+
+//gaming state
+//2.
 void BulletinBoard::updateScore(int score){
 	auto str = String::createWithFormat("%d", score);
 	scoreLabel->setString(str->getCString());
@@ -184,29 +162,42 @@ void BulletinBoard::updateScore(int score){
 }
 
 
-void BulletinBoard::removeScoreLabel(){
+//game over state
+//1.
+void BulletinBoard::showGameOver(){
 
-	this->removeChild(this->scoreLabel);
+	blinkScreen();
 
 }
 
 void  BulletinBoard::blinkScreen(){
 
 	auto white = CCSprite::createWithSpriteFrameName("white.png");
-	float scale = (visiableSize.height/white->getContentSize().height);
+	float scale = (visiableSize.height / white->getContentSize().height);
 	white->setScale(scale);
-	white-> setPosition(originPoint.x + visiableSize.width/2, originPoint.y + visiableSize.height/2);
+	white->setPosition(originPoint.x + visiableSize.width / 2, originPoint.y + visiableSize.height / 2);
 	this->addChild(white);
 	auto fadeOut = FadeOut::create(0.1f);
 	auto fadeIn = FadeIn::create(0.1f);
 	CallFunc *actionDone = CallFunc::create(std::bind(&BulletinBoard::fadeinPanel, this));
-	auto blinkAction = Sequence::create(fadeIn, fadeOut, actionDone,nullptr);
+	auto blinkAction = Sequence::create(fadeIn, fadeOut, actionDone, nullptr);
 
 	white->stopAllActions();
 	white->runAction(blinkAction);
 }
 
 
+//game over state
+//2.
+void BulletinBoard::removeScoreLabel(){
+
+	this->removeChild(this->scoreLabel);
+
+}
+
+
+//game over state
+//3.
 void  BulletinBoard::fadeinPanel(){
 
 	//get point

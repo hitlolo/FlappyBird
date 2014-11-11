@@ -41,7 +41,6 @@ bool LoadingScene::init()
 	//do the initialization works
 
 	//1.add background
-	CCLOG("%s","init() LoadingScene;--From LoadingScene");
 	auto background = Sprite::create(PIC_LOADING);
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -61,13 +60,13 @@ bool LoadingScene::init()
 }
 
 
+/* @brif
+** after the resoures loaded ,go to the next Scene;InfoScene to show the infomations about the game!
+*/
 void LoadingScene::loadOverCallback(Texture2D *texture)
 {
 
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile(RES_PLIST , texture);
-	CCLOG("LOADing IMAGES OVER");
-//	AtlasLoader::getInstance()->loadAtlas(TXT_LOADING, texture);
-
 	//load music
 	this->loadMusic();
 

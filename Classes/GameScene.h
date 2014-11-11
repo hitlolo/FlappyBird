@@ -25,10 +25,6 @@ USING_NS_CC;
 
 class GameScene :public Layer{
 
-private:
-
-
-
 public:
 
 	static Scene* createScene();

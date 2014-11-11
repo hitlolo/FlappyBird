@@ -22,6 +22,8 @@ bool BackGroundLayer::init()
 
 	this->initBackGround();
 	this->initPhysicsAttributes();
+
+	//after init start scrolling the land
 	this->scrollingStart();
 
 	return true;
@@ -32,6 +34,9 @@ void BackGroundLayer::onExit(){
 	this->overGame();
 }
 
+/* @brif
+** use to decide which backgroud image will use to create the backgroundSprite
+*/
 int BackGroundLayer::getLocalTime()
 {
 
@@ -86,12 +91,18 @@ void BackGroundLayer::initBackGround()
 
 }
 
+/* @brif
+** ask pipe layer which is dealing the point-add action to return the current point
+*/
 int BackGroundLayer::getCurPoint(){
 
 	return this->getPipeLayer()->getCurPoint();
 
 }
 
+/* @brif
+** this will be scheduled after the layer is added
+*/
 void BackGroundLayer::landScrolling(float dt)
 {
 	auto land_f = this->getChildByName("land_f");
@@ -115,6 +126,7 @@ void BackGroundLayer::scrollingStart()
 
 }
 
+
 void BackGroundLayer::scrollingEnd()
 {
 
@@ -125,11 +137,18 @@ void BackGroundLayer::scrollingEnd()
 	
 }
 
+/* @brif
+** let the child pipelayer to start create and move the pipes
+*/
 void BackGroundLayer::startGame(){
 
 	this->pipeLayer->startGame();
 }
 
+/* @brif
+** child pipelayer stop 
+*  and self ofcourse.
+*/
 void BackGroundLayer::overGame(){
 
 	this->scrollingEnd();
@@ -150,7 +169,6 @@ void BackGroundLayer::initPhysicsAttributes(){
 	auto  groundNode = Node::create();
 	float landWidth  = this->getChildByName("land_f")->getContentSize().width;
 	float landHeight = this->getChildByName("land_f")->getContentSize().height;
-	//CCLOG("%f  %f", landWidth, landHeight);
 	auto groundBody = PhysicsBody::create();
 	groundBody->addShape(PhysicsShapeBox::create(Size(landWidth, landHeight)));
 	groundBody->setDynamic(false);
@@ -162,13 +180,16 @@ void BackGroundLayer::initPhysicsAttributes(){
 
 	//
 	groundNode->setPhysicsBody(groundBody);
-	//CCLOG("%f  %f", originPoint.x + visibleSize.width / 2, landHeight / 2);
 	groundNode->setPosition(originPoint.x + visibleSize.width/2, landHeight / 2);
 	this->addChild(groundNode);
 
 }
 
-
+/* @brif
+** child pipelayer will deal the score-add action, 
+*  to show the score pipelayer will ask bulletinboardLayer to do it.
+*  this function is to set bulletinBoard delegate the pipelayer's specific action.
+*/
 void BackGroundLayer::setPipeDelegator(BulletinDelegate* delegator){
 
 	this->pipeLayer->setDelegator(delegator);

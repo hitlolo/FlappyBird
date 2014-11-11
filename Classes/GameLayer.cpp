@@ -81,16 +81,15 @@ void GameLayer::onTouch(){
 	}
 }
 
-
-//void TextureCache::addImageAsync(const std::string &path, const std::function<void(Texture2D*)>& callback)
-
-//void  GameLayer::readyGame(const std::function<void()> &callback){
+/* @brif
+** set game state ready
+*
+*/
 void  GameLayer::readyGame(){
 
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(M_SWOOSH);
 	this->getbulletinDelegator()->showBulletin(getGameState());
 	
-
 }
 
 void GameLayer::steadyGame(){
@@ -104,6 +103,7 @@ void  GameLayer::startGame(){
 
 	this->setGameState(GAMING);
 	this->getbulletinDelegator()->showBulletin(getGameState());
+	//ask bird and background to start
 	this->birdSprite->birdRun(BIRD_STATE::STATE_FLY);
 	this->backLayer->startGame();
 }
@@ -113,12 +113,11 @@ void  GameLayer::startGame(){
 void  GameLayer::overGame(){
 
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(M_HIT);
-	this->birdSprite->birdRun(BIRD_STATE::STATE_DIE);
 	this->setGameState(GAME_STATE::OVER);
-	this->backLayer->overGame();
 	this->getbulletinDelegator()->showBulletin(getGameState());
-
-	//score
+	
+	this->birdSprite->birdRun(BIRD_STATE::STATE_DIE);	
+	this->backLayer->overGame();
 
 }
 
@@ -136,10 +135,3 @@ void GameLayer::onGaming(){
 
 	this->birdSprite->gravityUp();
 }
-
-
-//void  GameLayer::getPoint(Ref* sender){
-//	this->curScore++;
-//	this->bulletinDelegated->updateScore(curScore);
-//
-//}

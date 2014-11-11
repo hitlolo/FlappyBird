@@ -13,6 +13,11 @@ ________________________________________________________________________________
 
 #include "InfoScene.h"
 
+/* @brif
+** this scene have two children
+*  1. the background layer
+*  2. the infomation layer
+*/
 bool InfoScene::init()
 {
 	if ( !Scene::init() ){

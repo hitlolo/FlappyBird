@@ -60,6 +60,29 @@ void BirdSprite::initPhysicsAttributes(){
 
 }
 
+void BirdSprite::initAnimation(std::string name, int img_count, float ft)
+{
+
+	Animation* animation = Animation::create();
+	for (int i = 0; i < img_count; i++){
+		String* file_name = String::createWithFormat(name.c_str(), i);
+		//CCLOG("%s", file_name->getCString());
+		SpriteFrame* frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(file_name->getCString());
+		animation->addSpriteFrame(frame);
+	}
+	animation->setDelayPerUnit(ft);
+	Animate* animate = Animate::create(animation);
+	//bind
+	this->actionIdle = RepeatForever::create(animate);
+
+	// create the swing action
+	ActionInterval* up = CCMoveBy::create(0.4f, Point(0, 8));
+	ActionInterval* upBack = up->reverse();
+	//bind
+	this->actionSwing = RepeatForever::create(Sequence::create(up, upBack, nullptr));
+
+
+}
 
 int BirdSprite::selectRandomColor()
 {
@@ -89,39 +112,12 @@ void BirdSprite::createBird()
 			break;
 	}
 
-	//CCLOG("%s    from init bird",name.c_str());
 	this->initWithSpriteFrame( SpriteFrameCache::getInstance()->getSpriteFrameByName(name));
 	
 	this->initAnimation(name_format,3,0.2f);
 
 	this->initPhysicsAttributes();
 }
-
-
-void BirdSprite::initAnimation(std::string name, int img_count, float ft)
-{
-
-	Animation* animation = Animation::create();
-	for (int i = 0; i < img_count; i++){
-		String* file_name  = String::createWithFormat(name.c_str(), i);
-		//CCLOG("%s", file_name->getCString());
-		SpriteFrame* frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(file_name->getCString());
-		animation->addSpriteFrame(frame);
-	}
-	animation->setDelayPerUnit(ft);
-	Animate* animate = Animate::create(animation);
-	//bind
-	this->actionIdle = RepeatForever::create(animate);
-
-	// create the swing action
-	ActionInterval* up     = CCMoveBy::create(0.4f, Point(0, 8));
-	ActionInterval* upBack = up->reverse();
-	//bind
-	this->actionSwing = RepeatForever::create(Sequence::create(up, upBack, nullptr));
-
-
-}
-
 
 
 void BirdSprite::idle()
@@ -142,18 +138,12 @@ void BirdSprite::fly()
 
 void BirdSprite::die()
 {
-
-	//播放音效
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(M_DIE);
-	//关闭定时器
 	this->unscheduleUpdate();
-
 	this->getPhysicsBody()->setGravityEnable(true);
-	//停止小鸟的所有动画
 	this->stopAllActions();
-	//设置角度，头向下...
+	//90 degree .head down!
 	this->setRotation(90);
-
 	this->runAction(FadeOut::create(0.9f));
 
 
@@ -183,29 +173,27 @@ void BirdSprite::birdRun(BIRD_STATE curState)
 
 }
 
-
 void BirdSprite::gravityDown(){
-
 	
-
 }
 
 void BirdSprite::gravityUp(){
 
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(M_WING);
-	//给小鸟一个初速度
+	//give bird a velocity to fly up
 	this->getPhysicsBody()->setVelocity(VELOCITY);
 }
 
+//scheduled
 void BirdSprite::update(float){
 
 	auto origin = Director::getInstance()->getVisibleOrigin();
 	auto visibleSize = Director::getInstance()->getVisibleSize();
-	//防止飞出边界
+	//avoid to corss the bound
 	if (this->getPositionY()>(origin.y + visibleSize.height))
 	{
 		this->setPositionY(origin.y + visibleSize.height);
 	}
-	//小鸟的飞行头部的角度，根据飞行的Y轴速度决定
+	//set the angle of the bird depends on the velocity.
 	this->setRotation(this->getPhysicsBody()->getVelocity().y*-0.1);
 }
